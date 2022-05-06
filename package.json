@@ -3,5 +3,32 @@
   "version": "1.1.0",
   "main": "index.js",
   "author": "Thomas Backers <thomasbackers@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon",
+    "generateTokens": "node scripts/generateTokens.js",
+    "migrate": "node scripts/migrate.js",
+    "makeController": "node scripts/makers/makeController.js",
+    "makeMiddleware": "node scripts/makers/makeMiddleware.js",
+    "makeMigration": "node scripts/makers/makeMigration.js",
+    "makeModel": "node scripts/makers/makeModel.js",
+    "makeRoutes": "node scripts/makers/makeRoutes.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "sequelize": "^6.19.0",
+    "sqlite3": "^5.0.7",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/uuid": "^8.3.4",
+    "nodemon": "^2.0.16",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
+  }
 }
