@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize'
-import User from '../core/interfaces/user.interface'
-import databaseManager from '../core/database/manager.database'
+import User from '@core/interfaces/user.interface'
+import databaseManager from '@core/database/manager.database'
 
 class UserModel extends Model<User> {}
 

@@ -18,7 +18,7 @@ class DatabaseManager {
           ? `./${this.databaseName}.sqlite`
           : '',
         host: String(process.env.DB_HOST),
-        logging: (...message): void => console.log(`🦊: ${message}`)
+        logging: (...msg): void => console.log(`🦊: ${msg}`)
       }
     )
   }
@@ -28,14 +28,15 @@ class DatabaseManager {
   }
 
   public sync = async (): Promise<boolean> => {
-    let isSuccessful = true
+    let isSuccessful: boolean
     try {
       await this.sequelize.sync()
+      console.log('🦊: successfully synced to database')
+      isSuccessful = true
     } catch (error: unknown) {
       console.log(`🐺: ${error instanceof Error ? error.message : error}`)
       isSuccessful = false
     }
-    console.log('🦊: successfully synced to database')
     return isSuccessful
   }
 }
