@@ -18,7 +18,7 @@ class DatabaseManager {
           ? `./${this.databaseName}.sqlite`
           : '',
         host: String(process.env.DB_HOST),
-        logging: (...msg): void => console.log(`🦊: ${msg}`)
+        logging: (...msg) => console.log(`🦊: ${msg}`)
       }
     )
   }

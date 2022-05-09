@@ -5,7 +5,7 @@ import jsonWebToken from 'jsonwebtoken'
 import { v4 as uuidv4 } from 'uuid'
 
 class AuthController {
-  static login = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
+  static login = async (req: Request, res: Response) => {
     try {
       const { username, password } = req.body
       const user = await UserModel.findOne({ where: { username } })
@@ -16,12 +16,11 @@ class AuthController {
         if (isPasswordCorrect) {
           const tokenData = {
             sub: user.getDataValue('id'),
-            name: user.getDataValue('username'),
-            iat: null
+            name: user.getDataValue('username')
           }
-          const accessToken = jsonWebToken.sign(tokenData, String(process.env.ACCESS_TOKEN_SECRET))
+          const token = jsonWebToken.sign(tokenData, String(process.env.ACCESS_TOKEN_SECRET))
           return res.json({
-            accessToken,
+            token,
             status: 200,
             msg: 'succeeded in authenticating user'
           })
@@ -32,7 +31,7 @@ class AuthController {
     }
   }
 
-  static register = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
+  static register = async (req: Request, res: Response) => {
     try {
       const { username, email, password } = req.body
       await UserModel.create({
