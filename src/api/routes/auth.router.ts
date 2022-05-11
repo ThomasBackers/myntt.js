@@ -1,13 +1,16 @@
 import { Router } from 'express'
-import authenticateToken from '@middlewares/authenticateToken.middleware'
-import TestController from '@controllers/test.controller'
+import AuthController from '@controllers/auth.controller'
 
-const testRouter = Router()
+const authRouter = Router()
 
-testRouter.get(
-  '/test',
-  authenticateToken,
-  TestController.test
+authRouter.post(
+  '/login',
+  AuthController.login
 )
 
-export default testRouter
+authRouter.post(
+  '/register',
+  AuthController.register
+)
+
+export default authRouter

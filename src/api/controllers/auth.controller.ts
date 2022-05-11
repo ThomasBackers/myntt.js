@@ -33,14 +33,16 @@ class AuthController {
 
   static register = async (req: Request, res: Response) => {
     try {
-      const { username, email, password } = req.body
-      await UserModel.create({
-        id: uuidv4(),
-        username,
-        email,
-        hashedPassword: await bcrypt.hash(password, 10)
-      })
-      return res.json({ status: 200, msg: 'succeeded in creating user' })
+      const { username, email, password, passwordConfirmation } = req.body
+      if (password === passwordConfirmation) {
+        await UserModel.create({
+          id: uuidv4(),
+          username,
+          email,
+          hashedPassword: await bcrypt.hash(password, 10)
+        })
+        return res.json({ status: 200, msg: 'succeeded in creating user' })
+      } else return res.json({ status: 500, msg: 'failed to create user' })
     } catch (error: unknown) {
       return res.json({ status: 500, msg: 'failed to create user' })
     }

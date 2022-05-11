@@ -1,7 +1,7 @@
 
 ```
-npm run makeMigration
-yarn run makeMigration
+npm run generateTokens
+yarn run generateTokens
 ```
 
 ```

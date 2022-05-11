@@ -19,41 +19,60 @@ import { v4 as uuidv4 } from 'uuid'
 class ${capitalizedName}Controller {
   static index = async (req: Request, res: Response) => {
     try {
-      //
-    } catch (error: Unknown) {
-      //
-    }
-  }
-
-  static show = async (req: Request, res: Response) => {
-    try {
-      //
-    } catch (error: Unknown) {
-      //
+      const limit = req.query?.limit as number | undefined
+      const offset = req.query?.offset as number | undefined
+      const data = await ${capitalizedModelName}Model.findAll({ limit, offset })
+      return res.json(
+        data.length !== 0
+          ? { data, status: 200, msg: '' }
+          : { status: 500, msg: '' }
+      )
+    } catch (error: unknown) {
+      return res.json({ status: 500, msg: '' })
     }
   }
 
   static store = async (req: Request, res: Response) => {
     try {
-      //
-    } catch (error: Unknown) {
-      //
+      const id = uuidv4()
+      const data = await ${capitalizedModelName}Model.create({ ...req.body, id })
+      return res.json({ status: 500, msg: '' })
+    } catch (error: unknown) {
+      return res.json({ status: 500, msg: '' })
+    }
+  }
+
+  static show = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params
+      const data = await ${capitalizedModelName}Model.findOne({ where: { id } })
+      return res.json({ data, status: 200, msg: '' })
+    } catch (error: unknown) {
+      return res.json({ status: 500, msg: '' })
     }
   }
 
   static update = async (req: Request, res: Response) => {
     try {
-      //
-    } catch (error: Unknown) {
-      //
+      const { id } = req.params
+      const data = await ${capitalizedModelName}Model.findOne({ where: { id } })
+      if (!data) return res.json({ status: 500, msg: '' })
+      await data.update({ ...req.body })
+      return res.json({ status: 200, msg: '' })
+    } catch (error: unknown) {
+      return res.json({ status: 500, msg: '' })
     }
   }
 
   static destroy = async (req: Request, res: Response) => {
     try {
-      //
-    } catch (error: Unknown) {
-      //
+      const { id } = req.params
+      const data = await ${capitalizedModelName}Model.findOne({ where: { id } })
+      if (!data) return res.json({ status: 500, msg: '' })
+      await data.destroy()
+      return res.json({ status: 200, msg: '' })
+    } catch (error: unknown) {
+      return res.json({ status: 500, msg: '' })
     }
   }
 }
