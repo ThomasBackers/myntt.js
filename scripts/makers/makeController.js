@@ -1,6 +1,6 @@
 const [,, ...args] = process.argv
 
-if (args.length !== 2) console.log('makeController expected exactly 2 argument')
+if (args.length !== 2) console.log('makeController expected exactly 2 arguments')
 else {
   const name = args[0]
   const capitalizedName = name.replace(name[0], name[0].toUpperCase())
