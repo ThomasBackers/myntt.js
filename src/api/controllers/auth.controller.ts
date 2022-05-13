@@ -20,12 +20,12 @@ class AuthController {
           }
           const token = jsonWebToken.sign(tokenData, String(process.env.ACCESS_TOKEN_SECRET))
           return res.json({
-            token,
+            data: { token },
             status: 200,
             msg: 'succeeded in authenticating user'
           })
-        } else return res.json({ status: 500, msg: 'failed to authenticate user' })
-      } else return res.json({ status: 500, msg: 'failed to authenticate user' })
+        } return res.json({ status: 500, msg: 'failed to authenticate user' })
+      } return res.json({ status: 500, msg: 'failed to authenticate user' })
     } catch (error: unknown) {
       return res.json({ status: 500, msg: 'failed to authenticate user' })
     }
@@ -42,7 +42,7 @@ class AuthController {
           hashedPassword: await bcrypt.hash(password, 10)
         })
         return res.json({ status: 200, msg: 'succeeded in creating user' })
-      } else return res.json({ status: 500, msg: 'failed to create user' })
+      } return res.json({ status: 500, msg: 'failed to create user' })
     } catch (error: unknown) {
       return res.json({ status: 500, msg: 'failed to create user' })
     }

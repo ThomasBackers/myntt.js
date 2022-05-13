@@ -21,12 +21,17 @@ class ${capitalizedName}Controller {
     try {
       const limit = req.query?.limit as number | undefined
       const offset = req.query?.offset as number | undefined
-      const data = await ${capitalizedModelName}Model.findAll({ limit, offset })
-      return res.json(
-        data.length !== 0
-          ? { data, status: 200, msg: '' }
-          : { status: 500, msg: '' }
-      )
+      const order = req.body.order
+      if (limit) {
+        const count = await ${capitalizedModelName}Model.count()
+        const lastPage = Math.ceil(count / limit)
+        const record = await ${capitalizedModelName}Model.findAll({ order, limit, offset })
+        return res.json({
+          data: { record, lastPage },
+          status: 200,
+          msg: ''
+        })
+      } return res.json({ status: 500, msg: '' })
     } catch (error: unknown) {
       return res.json({ status: 500, msg: '' })
     }
@@ -35,8 +40,8 @@ class ${capitalizedName}Controller {
   static store = async (req: Request, res: Response) => {
     try {
       const id = uuidv4()
-      const data = await ${capitalizedModelName}Model.create({ ...req.body, id })
-      return res.json({ status: 500, msg: '' })
+      await ${capitalizedModelName}Model.create({ ...req.body, id })
+      return res.json({ status: 200, msg: '' })
     } catch (error: unknown) {
       return res.json({ status: 500, msg: '' })
     }
@@ -45,8 +50,12 @@ class ${capitalizedName}Controller {
   static show = async (req: Request, res: Response) => {
     try {
       const { id } = req.params
-      const data = await ${capitalizedModelName}Model.findOne({ where: { id } })
-      return res.json({ data, status: 200, msg: '' })
+      const record = await ${capitalizedModelName}Model.findOne({ where: { id } })
+      return res.json({
+        data: { record },
+        status: 200,
+        msg: ''
+      })
     } catch (error: unknown) {
       return res.json({ status: 500, msg: '' })
     }
@@ -55,9 +64,9 @@ class ${capitalizedName}Controller {
   static update = async (req: Request, res: Response) => {
     try {
       const { id } = req.params
-      const data = await ${capitalizedModelName}Model.findOne({ where: { id } })
-      if (!data) return res.json({ status: 500, msg: '' })
-      await data.update({ ...req.body })
+      const record = await ${capitalizedModelName}Model.findOne({ where: { id } })
+      if (!record) return res.json({ status: 500, msg: '' })
+      await record.update({ ...req.body })
       return res.json({ status: 200, msg: '' })
     } catch (error: unknown) {
       return res.json({ status: 500, msg: '' })
@@ -67,9 +76,9 @@ class ${capitalizedName}Controller {
   static destroy = async (req: Request, res: Response) => {
     try {
       const { id } = req.params
-      const data = await ${capitalizedModelName}Model.findOne({ where: { id } })
-      if (!data) return res.json({ status: 500, msg: '' })
-      await data.destroy()
+      const record = await ${capitalizedModelName}Model.findOne({ where: { id } })
+      if (!record) return res.json({ status: 500, msg: '' })
+      await record.destroy()
       return res.json({ status: 200, msg: '' })
     } catch (error: unknown) {
       return res.json({ status: 500, msg: '' })
