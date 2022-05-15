@@ -25,7 +25,13 @@ UserModel.init(
     },
     hashedPassword: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: false
+    },
+    verifiedAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      unique: false
     }
   },
   {

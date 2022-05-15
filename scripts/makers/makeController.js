@@ -31,19 +31,32 @@ class ${capitalizedName}Controller {
           status: 200,
           msg: ''
         })
-      } return res.json({ status: 500, msg: '' })
+      } return res.json({
+        status: 500,
+        msg: ''
+      })
     } catch (error: unknown) {
-      return res.json({ status: 500, msg: '' })
+      return res.json({
+        status: 500,
+        msg: ''
+      })
     }
   }
 
   static store = async (req: Request, res: Response) => {
     try {
       const id = uuidv4()
-      await ${capitalizedModelName}Model.create({ ...req.body, id })
-      return res.json({ status: 200, msg: '' })
+      const record = await ${capitalizedModelName}Model.create({ ...req.body, id })
+      return res.json({
+        data: { record },
+        status: 201,
+        msg: ''
+      })
     } catch (error: unknown) {
-      return res.json({ status: 500, msg: '' })
+      return res.json({
+        status: 500,
+        msg: ''
+      })
     }
   }
 
@@ -57,7 +70,10 @@ class ${capitalizedName}Controller {
         msg: ''
       })
     } catch (error: unknown) {
-      return res.json({ status: 500, msg: '' })
+      return res.json({
+        status: 500,
+        msg: ''
+      })
     }
   }
 
@@ -65,11 +81,23 @@ class ${capitalizedName}Controller {
     try {
       const { id } = req.params
       const record = await ${capitalizedModelName}Model.findOne({ where: { id } })
-      if (!record) return res.json({ status: 500, msg: '' })
+      if (!record) {
+        return res.json({
+          status: 500,
+          msg: ''
+        })
+      }
       await record.update({ ...req.body })
-      return res.json({ status: 200, msg: '' })
+      return res.json({
+        data: { record },
+        status: 201,
+        msg: ''
+      })
     } catch (error: unknown) {
-      return res.json({ status: 500, msg: '' })
+      return res.json({
+        status: 500,
+        msg: ''
+      })
     }
   }
 
@@ -77,11 +105,22 @@ class ${capitalizedName}Controller {
     try {
       const { id } = req.params
       const record = await ${capitalizedModelName}Model.findOne({ where: { id } })
-      if (!record) return res.json({ status: 500, msg: '' })
+      if (!record) {
+        return res.json({
+          status: 500,
+          msg: ''
+        })
+      }
       await record.destroy()
-      return res.json({ status: 200, msg: '' })
+      return res.json({
+        status: 204,
+        msg: ''
+      })
     } catch (error: unknown) {
-      return res.json({ status: 500, msg: '' })
+      return res.json({
+        status: 500,
+        msg: ''
+      })
     }
   }
 }
