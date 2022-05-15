@@ -15,7 +15,7 @@ class AuthController {
           username,
           email,
           hashedPassword: await bcrypt.hash(password, 10),
-          verifiedAt: null
+          avatar: null
         })
         return res.json({
           status: 200,
@@ -49,7 +49,14 @@ class AuthController {
           const refreshToken = jsonWebToken.sign(tokenData, String(process.env.REFRESH_TOKEN_SECRET))
           await TokenModel.create({ id: uuidv4(), token: refreshToken })
           return res.json({
-            data: { token, refreshToken },
+            data: {
+              user: {
+                username: user.getDataValue('username'),
+                avatar: user.getDataValue('avatar')
+              },
+              token,
+              refreshToken
+            },
             status: 201,
             msg: 'succeeded in authenticating user'
           })

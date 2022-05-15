@@ -28,8 +28,8 @@ UserModel.init(
       allowNull: false,
       unique: false
     },
-    verifiedAt: {
-      type: DataTypes.DATE,
+    avatar: {
+      type: DataTypes.STRING,
       allowNull: true,
       unique: false
     }
