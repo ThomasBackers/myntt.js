@@ -28,7 +28,7 @@ UserModel.init(
       allowNull: false,
       unique: false
     },
-    avatar: {
+    avatarPath: {
       type: DataTypes.STRING,
       allowNull: true,
       unique: false

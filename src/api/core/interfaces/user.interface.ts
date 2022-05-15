@@ -3,7 +3,7 @@ interface User {
   username: string
   email: string
   hashedPassword: string
-  avatar: string | null
+  avatarPath: string | null
 }
 
 export default User

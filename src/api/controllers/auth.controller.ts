@@ -15,7 +15,7 @@ class AuthController {
           username,
           email,
           hashedPassword: await bcrypt.hash(password, 10),
-          avatar: null
+          avatarPath: null
         })
         return res.json({
           status: 200,
@@ -52,7 +52,7 @@ class AuthController {
             data: {
               user: {
                 username: user.getDataValue('username'),
-                avatar: user.getDataValue('avatar')
+                avatar: user.getDataValue('avatarPath')
               },
               token,
               refreshToken
